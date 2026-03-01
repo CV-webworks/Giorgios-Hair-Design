@@ -95,18 +95,16 @@ body {
   -webkit-text-size-adjust: 100%;
 }
 
-/* ===== CUSTOM CURSOR (desktop only) ===== */
+/* ===== CUSTOM CURSOR ===== */
 .cursor-dot, .cursor-ring {
   position: fixed; top: 0; left: 0;
   pointer-events: none; z-index: 99998;
-  border-radius: 50%;
-  will-change: transform;
+  border-radius: 50%; will-change: transform;
 }
 .cursor-dot {
   width: 8px; height: 8px;
   background: var(--gold);
-  z-index: 99999;
-  mix-blend-mode: difference;
+  z-index: 99999; mix-blend-mode: difference;
 }
 .cursor-ring {
   width: 40px; height: 40px;
@@ -117,12 +115,10 @@ body {
   width: 64px; height: 64px;
   background: rgba(201,169,110,0.06);
 }
-
 @media (hover: none), (pointer: coarse) {
   .cursor-dot, .cursor-ring { display: none !important; }
   body { cursor: auto; }
 }
-
 @media (hover: hover) and (pointer: fine) {
   body { cursor: none; }
 }
@@ -183,7 +179,6 @@ body {
   transition: width 0.4s cubic-bezier(0.16,1,0.3,1);
 }
 .nav-links a:hover::after { width: 100%; }
-
 .nav-cta {
   padding: 10px 24px !important;
   background: var(--gold); color: var(--white) !important;
@@ -216,10 +211,8 @@ body {
 .mobile-menu {
   position: fixed; inset: 0;
   background: rgba(26,26,26,0.96);
-  backdrop-filter: blur(32px);
-  -webkit-backdrop-filter: blur(32px);
-  z-index: 999;
-  display: flex; flex-direction: column;
+  backdrop-filter: blur(32px); -webkit-backdrop-filter: blur(32px);
+  z-index: 999; display: flex; flex-direction: column;
   align-items: center; justify-content: center; gap: 12px;
   opacity: 0; pointer-events: none;
   transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1);
@@ -231,12 +224,10 @@ body {
   color: var(--white); text-decoration: none;
   font-weight: 300; padding: 12px 24px;
   min-height: 52px; display: flex; align-items: center;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, opacity 0.4s ease, transform 0.4s ease;
   opacity: 0; transform: translateY(20px);
 }
-.mobile-menu.active a {
-  opacity: 1; transform: translateY(0);
-}
+.mobile-menu.active a { opacity: 1; transform: translateY(0); }
 .mobile-menu a:hover { color: var(--gold); }
 .mobile-menu-cta {
   margin-top: 20px;
@@ -253,18 +244,30 @@ body {
 
 /* ===== HERO ===== */
 .hero {
-  position: relative; height: 100vh; height: 100dvh;
-  min-height: 600px; display: flex;
-  align-items: center; justify-content: center;
+  position: relative;
+  height: 100vh; height: 100dvh;
+  min-height: 550px;
+  display: flex; align-items: center; justify-content: center;
   overflow: hidden;
 }
-.hero-bg {
-  position: absolute; top: -10%; left: 0; right: 0;
-  width: 100%; height: 120%;
-  background-image: url('https://i.ibb.co/1Y5WBpMY/inside.webp');
-  background-size: cover; background-position: center center;
+
+/* Hero background as real <img> for bulletproof mobile loading */
+.hero-bg-wrap {
+  position: absolute;
+  inset: -10% 0;
+  width: 100%;
+  height: 120%;
+  overflow: hidden;
   will-change: transform;
 }
+.hero-bg-img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+}
+
 .hero-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(180deg,
@@ -272,11 +275,11 @@ body {
     rgba(26,26,26,0.2) 40%,
     rgba(26,26,26,0.6) 100%
   );
+  z-index: 1;
 }
 .hero-content {
   position: relative; z-index: 2;
-  text-align: center;
-  max-width: 900px;
+  text-align: center; max-width: 900px;
   padding: 0 var(--container-pad);
   padding-top: var(--nav-height);
 }
@@ -286,8 +289,7 @@ body {
   font-size: clamp(0.62rem, 1.2vw, 0.72rem);
   font-weight: 600; letter-spacing: 0.25em;
   text-transform: uppercase; color: var(--gold-light);
-  margin-bottom: clamp(16px, 3vw, 24px);
-  opacity: 0;
+  margin-bottom: clamp(16px, 3vw, 24px); opacity: 0;
 }
 .hero-eyebrow::before, .hero-eyebrow::after {
   content: ''; width: clamp(24px, 4vw, 40px);
@@ -296,10 +298,8 @@ body {
 .hero h1 {
   font-family: var(--font-serif);
   font-size: clamp(2.6rem, 7.5vw, 6.5rem);
-  font-weight: 300; line-height: 1.05;
-  color: var(--white);
-  margin-bottom: clamp(12px, 2vw, 20px);
-  opacity: 0;
+  font-weight: 300; line-height: 1.05; color: var(--white);
+  margin-bottom: clamp(12px, 2vw, 20px); opacity: 0;
 }
 .hero h1 em { font-style: italic; font-weight: 400; color: var(--gold-light); }
 .hero-sub {
@@ -327,8 +327,6 @@ body {
 .btn-primary:hover { background: var(--gold-dark); box-shadow: var(--shadow-gold); }
 .btn-outline { background: transparent; color: var(--white); border: 1.5px solid rgba(255,255,255,0.35); }
 .btn-outline:hover { border-color: var(--gold); color: var(--gold-light); }
-.btn-dark { background: var(--charcoal); color: var(--white); border: none; }
-.btn-dark:hover { background: var(--dark); }
 
 .hero-scroll {
   position: absolute; bottom: clamp(24px, 4vw, 40px);
@@ -379,17 +377,22 @@ section { padding: var(--section-pad) var(--container-pad); }
 /* ===== ABOUT ===== */
 .about { background: var(--off-white); }
 .about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 6vw, 80px);
-  align-items: center;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 80px); align-items: center;
 }
 .about-image-wrap {
   position: relative; border-radius: 16px; overflow: hidden;
+  /* Enforce minimum height so image is always visible */
+  min-height: 260px;
 }
 .about-image-wrap img {
-  width: 100%; height: clamp(320px, 40vw, 520px);
-  object-fit: cover; display: block;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 260px;
+  max-height: 520px;
+  object-fit: cover;
+  object-position: center center;
   transition: transform 1s cubic-bezier(0.16,1,0.3,1);
 }
 @media (hover: hover) {
@@ -401,6 +404,7 @@ section { padding: var(--section-pad) var(--container-pad); }
   backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
   border: 1px solid var(--glass-border); border-radius: 12px;
   padding: 12px 16px; display: flex; align-items: center; gap: 10px;
+  z-index: 2;
 }
 .badge-stars { color: var(--gold); font-size: 1rem; }
 .badge-text { font-size: 0.75rem; font-weight: 500; color: var(--charcoal); }
@@ -437,10 +441,8 @@ section { padding: var(--section-pad) var(--container-pad); }
 .services { background: var(--white); }
 .services-header { text-align: center; margin-bottom: clamp(40px, 6vw, 64px); }
 .services-header .section-desc { margin: 0 auto; }
-
 .services-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: grid; grid-template-columns: repeat(3, 1fr);
   gap: clamp(14px, 2vw, 20px);
 }
 .service-card {
@@ -493,20 +495,14 @@ section { padding: var(--section-pad) var(--container-pad); }
 .testimonials .section-title { color: var(--white); }
 .testimonials .section-desc { color: rgba(255,255,255,0.45); }
 .testimonials-header { text-align: center; margin-bottom: clamp(40px, 6vw, 64px); }
-
-.testimonials-track {
-  position: relative;
-  overflow: hidden;
-}
+.testimonials-track { position: relative; overflow: hidden; }
 .testimonials-slider {
   display: flex; gap: clamp(16px, 2vw, 24px);
   overflow-x: auto; scroll-snap-type: x mandatory;
   scrollbar-width: none; -ms-overflow-style: none;
-  padding-bottom: 8px;
-  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px; -webkit-overflow-scrolling: touch;
 }
 .testimonials-slider::-webkit-scrollbar { display: none; }
-
 .testimonial-card {
   flex: 0 0 clamp(280px, 34vw, 380px);
   scroll-snap-align: start;
@@ -540,7 +536,6 @@ section { padding: var(--section-pad) var(--container-pad); }
 }
 .author-name { font-size: 0.88rem; font-weight: 500; color: var(--white); }
 .author-when { font-size: 0.7rem; color: rgba(255,255,255,0.35); margin-top: 2px; }
-
 .slider-controls {
   display: flex; justify-content: center;
   gap: 12px; margin-top: clamp(24px, 3vw, 36px);
@@ -581,7 +576,6 @@ section { padding: var(--section-pad) var(--container-pad); }
 .hours-day { font-size: clamp(0.85rem, 1vw, 0.92rem); font-weight: 500; color: var(--charcoal); }
 .hours-time { font-size: clamp(0.82rem, 0.95vw, 0.88rem); font-weight: 400; color: var(--mid-grey); }
 .hours-time.closed { color: #C7756E; font-weight: 500; }
-
 .hours-status {
   display: inline-flex; align-items: center; gap: 8px;
   margin-top: 24px; padding: 10px 20px; border-radius: 100px;
@@ -624,7 +618,7 @@ section { padding: var(--section-pad) var(--container-pad); }
 .form-group input, .form-group textarea {
   width: 100%; padding: clamp(12px, 1.5vw, 14px) 16px;
   font-family: var(--font-sans);
-  font-size: 16px; /* prevents iOS zoom */
+  font-size: 16px;
   color: var(--charcoal); background: var(--white);
   border: 1.5px solid var(--light-grey); border-radius: 10px;
   transition: all 0.3s ease; outline: none;
@@ -669,7 +663,6 @@ section { padding: var(--section-pad) var(--container-pad); }
   font-weight: 300; line-height: 1.5; transition: color 0.3s ease;
 }
 .contact-item-text a:hover { color: var(--gold); }
-
 .contact-notice {
   display: flex; align-items: center; gap: 12px;
   padding: 14px 18px; background: rgba(201,169,110,0.08);
@@ -681,7 +674,6 @@ section { padding: var(--section-pad) var(--container-pad); }
   fill: none; stroke-width: 1.5; flex-shrink: 0;
 }
 .contact-notice p { font-size: 0.8rem; color: var(--charcoal); font-weight: 500; }
-
 .map-embed {
   margin-top: 28px; border-radius: 16px;
   overflow: hidden; border: 1px solid var(--light-grey);
@@ -713,13 +705,9 @@ section { padding: var(--section-pad) var(--container-pad); }
   font-weight: 600; text-decoration: none;
   min-height: 50px; transition: all 0.3s ease;
 }
-.call-bar-phone {
-  background: var(--gold); color: var(--white);
-}
+.call-bar-phone { background: var(--gold); color: var(--white); }
 .call-bar-phone:hover { background: var(--gold-dark); }
-.call-bar-directions {
-  background: var(--charcoal); color: var(--white);
-}
+.call-bar-directions { background: var(--charcoal); color: var(--white); }
 .call-bar-directions:hover { background: var(--dark); }
 .call-bar-inner svg {
   width: 18px; height: 18px; stroke: currentColor;
@@ -760,68 +748,56 @@ section { padding: var(--section-pad) var(--container-pad); }
    RESPONSIVE BREAKPOINTS
    ============================================================ */
 
-/* TABLET: 768px – 1024px */
+/* TABLET */
 @media (max-width: 1024px) {
   :root { --nav-height: 72px; }
-
   .nav-links { display: none; }
   .nav-toggle { display: flex; }
-
   .about-grid { grid-template-columns: 1fr; gap: 40px; }
   .about-image-wrap { order: -1; }
-
   .services-grid { grid-template-columns: repeat(2, 1fr); }
-
   .hours-grid { grid-template-columns: 1fr; gap: 40px; }
-
   .contact-grid { grid-template-columns: 1fr; gap: 40px; }
-
   .map-embed iframe { height: 280px; }
 }
 
-/* MOBILE: < 768px */
+/* MOBILE */
 @media (max-width: 768px) {
   :root { --nav-height: 64px; }
-
   .services-grid { grid-template-columns: 1fr; }
-
   .testimonial-card { flex: 0 0 85vw; }
-
   .hero-scroll { display: none; }
 
-  .about-image-wrap img { height: 280px; }
-
-  .about-image-badge {
-    bottom: 12px; left: 12px;
-    padding: 10px 14px;
+  /* About image — explicit height for mobile */
+  .about-image-wrap { min-height: 240px; }
+  .about-image-wrap img {
+    min-height: 240px;
+    max-height: 360px;
+    height: 55vw;
   }
 
-  .footer-inner {
-    flex-direction: column; text-align: center;
-  }
+  .footer-inner { flex-direction: column; text-align: center; }
   .footer-links { justify-content: center; }
-
-  /* Show mobile call bar */
   .mobile-call-bar { display: block; }
-
-  /* Add bottom padding for call bar */
   .footer { padding-bottom: 100px; }
-
   .map-embed iframe { height: 240px; }
 }
 
-/* SMALL MOBILE: < 400px */
+/* SMALL MOBILE */
 @media (max-width: 400px) {
   .hero-buttons { flex-direction: column; align-items: center; }
   .hero-buttons .btn { width: 100%; justify-content: center; }
-
   .service-card-header { flex-direction: column; gap: 8px; }
   .service-price { align-self: flex-start; }
-
   .call-bar-inner { flex-direction: column; }
+
+  .about-image-wrap img {
+    min-height: 200px;
+    height: 60vw;
+  }
 }
 
-/* LARGE DESKTOP: > 1400px */
+/* LARGE DESKTOP */
 @media (min-width: 1400px) {
   .services-grid { grid-template-columns: repeat(3, 1fr); }
   .map-embed iframe { height: 400px; }
@@ -843,8 +819,7 @@ section { padding: var(--section-pad) var(--container-pad); }
     scroll-behavior: auto !important;
   }
   .reveal, .reveal-left, .reveal-right {
-    opacity: 1 !important;
-    transform: none !important;
+    opacity: 1 !important; transform: none !important;
   }
 }
 </style>
@@ -881,9 +856,17 @@ section { padding: var(--section-pad) var(--container-pad); }
   </div>
 </nav>
 
-<!-- Hero -->
+<!-- Hero — now uses a real <img> tag instead of CSS background-image -->
 <section class="hero" id="hero">
-  <div class="hero-bg" id="heroBg" role="img" aria-label="Giorgios Hair Design salon interior"></div>
+  <div class="hero-bg-wrap" id="heroBgWrap">
+    <img
+      class="hero-bg-img"
+      src="https://i.ibb.co/1Y5WBpMY/inside.webp"
+      alt="Interior of Giorgios Hair Design salon in London N20"
+      fetchpriority="high"
+      decoding="async"
+    >
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-eyebrow">Est. London</div>
@@ -900,12 +883,19 @@ section { padding: var(--section-pad) var(--container-pad); }
   </div>
 </section>
 
-<!-- About -->
+<!-- About — img tag with explicit width/height attributes for layout stability -->
 <section class="about" id="about">
   <div class="section-container">
     <div class="about-grid">
       <div class="about-image-wrap reveal-left">
-        <img src="https://i.ibb.co/V0QDGPjk/hair.webp" alt="Expert hair styling at Giorgios Hair Design in London N20" loading="lazy" width="600" height="500">
+        <img
+          src="https://i.ibb.co/V0QDGPjk/hair.webp"
+          alt="Expert hair styling at Giorgios Hair Design in London N20"
+          loading="lazy"
+          decoding="async"
+          width="600"
+          height="500"
+        >
         <div class="about-image-badge">
           <div class="badge-stars">★★★★★</div>
           <div class="badge-text">4.7 Rating<span>45+ Verified Reviews</span></div>
@@ -1252,39 +1242,35 @@ section { padding: var(--section-pad) var(--container-pad); }
 (function() {
   'use strict';
 
-  /* ===== DEVICE DETECTION ===== */
   const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ===== CUSTOM CURSOR (Desktop Only) ===== */
+  /* ===== CUSTOM CURSOR ===== */
   if (!isTouchDevice) {
     const cursorDot = document.querySelector('.cursor-dot');
     const cursorRing = document.querySelector('.cursor-ring');
     let mouseX = -100, mouseY = -100, ringX = -100, ringY = -100;
 
     document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+      mouseX = e.clientX; mouseY = e.clientY;
       cursorDot.style.transform = `translate(${mouseX - 4}px, ${mouseY - 4}px)`;
     });
 
     function animateCursor() {
-      const ease = 0.12;
-      ringX += (mouseX - ringX) * ease;
-      ringY += (mouseY - ringY) * ease;
+      ringX += (mouseX - ringX) * 0.12;
+      ringY += (mouseY - ringY) * 0.12;
       cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px)`;
       requestAnimationFrame(animateCursor);
     }
     animateCursor();
 
-    const hoverables = document.querySelectorAll('a, button, .service-card, .feature-item, .testimonial-card, input, textarea');
-    hoverables.forEach(el => {
+    document.querySelectorAll('a, button, .service-card, .feature-item, .testimonial-card, input, textarea').forEach(el => {
       el.addEventListener('mouseenter', () => cursorRing.classList.add('hover'));
       el.addEventListener('mouseleave', () => cursorRing.classList.remove('hover'));
     });
   }
 
-  /* ===== MAGNETIC BUTTONS (Desktop Only) ===== */
+  /* ===== MAGNETIC BUTTONS ===== */
   if (!isTouchDevice) {
     document.querySelectorAll('.magnetic-btn').forEach(btn => {
       btn.addEventListener('mousemove', (e) => {
@@ -1302,17 +1288,10 @@ section { padding: var(--section-pad) var(--container-pad); }
   /* ===== NAVBAR SCROLL ===== */
   const navbar = document.getElementById('navbar');
   let ticking = false;
-
   function onScroll() {
-    const scrollY = window.pageYOffset;
-    if (scrollY > 60) {
-      navbar.classList.add('scrolled');
-    } else {
-      navbar.classList.remove('scrolled');
-    }
+    navbar.classList.toggle('scrolled', window.pageYOffset > 60);
     ticking = false;
   }
-
   window.addEventListener('scroll', () => {
     if (!ticking) { requestAnimationFrame(onScroll); ticking = true; }
   }, { passive: true });
@@ -1328,16 +1307,12 @@ section { padding: var(--section-pad) var(--container-pad); }
     mobileMenu.classList.toggle('active', menuOpen);
     navToggle.setAttribute('aria-expanded', menuOpen);
     document.body.style.overflow = menuOpen ? 'hidden' : '';
-
-    // Stagger animate menu links
     if (menuOpen) {
-      const links = mobileMenu.querySelectorAll('a');
-      links.forEach((link, i) => {
+      mobileMenu.querySelectorAll('a').forEach((link, i) => {
         link.style.transitionDelay = `${0.05 + i * 0.06}s`;
       });
     } else {
-      const links = mobileMenu.querySelectorAll('a');
-      links.forEach(link => { link.style.transitionDelay = '0s'; });
+      mobileMenu.querySelectorAll('a').forEach(link => { link.style.transitionDelay = '0s'; });
     }
   });
 
@@ -1347,25 +1322,24 @@ section { padding: var(--section-pad) var(--container-pad); }
     mobileMenu.classList.remove('active');
     navToggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    const links = mobileMenu.querySelectorAll('a');
-    links.forEach(link => { link.style.transitionDelay = '0s'; });
+    mobileMenu.querySelectorAll('a').forEach(link => { link.style.transitionDelay = '0s'; });
   };
 
   /* ===== HERO PARALLAX ===== */
-  const heroBg = document.getElementById('heroBg');
+  const heroBgWrap = document.getElementById('heroBgWrap');
   const heroSection = document.querySelector('.hero');
-  const isMobile = window.innerWidth < 768;
 
-  if (!prefersReducedMotion) {
+  if (!prefersReducedMotion && heroBgWrap) {
     let parallaxTicking = false;
+    const isMobileView = () => window.innerWidth < 768;
+
     window.addEventListener('scroll', () => {
       if (!parallaxTicking) {
         requestAnimationFrame(() => {
           const scrolled = window.pageYOffset;
-          const heroHeight = heroSection.offsetHeight;
-          if (scrolled < heroHeight) {
-            const parallaxAmount = isMobile ? 0.15 : 0.35;
-            heroBg.style.transform = `translateY(${scrolled * parallaxAmount}px) scale(1.03)`;
+          if (scrolled < heroSection.offsetHeight) {
+            const amount = isMobileView() ? 0.12 : 0.3;
+            heroBgWrap.style.transform = `translateY(${scrolled * amount}px)`;
           }
           parallaxTicking = false;
         });
@@ -1382,8 +1356,7 @@ section { padding: var(--section-pad) var(--container-pad); }
   function getSlideWidth() {
     const card = slider.querySelector('.testimonial-card');
     if (!card) return 300;
-    const style = window.getComputedStyle(slider);
-    const gap = parseFloat(style.gap) || 16;
+    const gap = parseFloat(window.getComputedStyle(slider).gap) || 16;
     return card.offsetWidth + gap;
   }
 
@@ -1401,11 +1374,7 @@ section { padding: var(--section-pad) var(--container-pad); }
     window.addEventListener('scroll', () => {
       if (!callBarTicking) {
         requestAnimationFrame(() => {
-          if (window.pageYOffset > window.innerHeight * 0.5) {
-            mobileCallBar.classList.add('visible');
-          } else {
-            mobileCallBar.classList.remove('visible');
-          }
+          mobileCallBar.classList.toggle('visible', window.pageYOffset > window.innerHeight * 0.5);
           callBarTicking = false;
         });
         callBarTicking = true;
@@ -1416,19 +1385,18 @@ section { padding: var(--section-pad) var(--container-pad); }
   /* ===== OPEN / CLOSED STATUS ===== */
   function checkOpenStatus() {
     const now = new Date();
-    const londonTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/London' }));
+    let londonTime;
+    try {
+      londonTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/London' }));
+    } catch (e) { londonTime = now; }
     const day = londonTime.getDay();
     const currentTime = londonTime.getHours() * 60 + londonTime.getMinutes();
     const statusEl = document.getElementById('hoursStatus');
     const statusText = document.getElementById('statusText');
     const schedule = {
-      0: null,
-      1: { open: 510, close: 1080 },
-      2: { open: 510, close: 1080 },
-      3: { open: 510, close: 780 },
-      4: { open: 510, close: 1080 },
-      5: { open: 510, close: 1080 },
-      6: { open: 480, close: 1080 },
+      0: null, 1: { open: 510, close: 1080 }, 2: { open: 510, close: 1080 },
+      3: { open: 510, close: 780 }, 4: { open: 510, close: 1080 },
+      5: { open: 510, close: 1080 }, 6: { open: 480, close: 1080 },
     };
     const today = schedule[day];
     if (today && currentTime >= today.open && currentTime < today.close) {
@@ -1446,7 +1414,6 @@ section { padding: var(--section-pad) var(--container-pad); }
   if (!prefersReducedMotion) {
     gsap.registerPlugin(ScrollTrigger);
 
-    // Hero entrance
     const heroTl = gsap.timeline({ delay: 0.3 });
     heroTl
       .fromTo('.hero-eyebrow', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' })
@@ -1455,21 +1422,18 @@ section { padding: var(--section-pad) var(--container-pad); }
       .fromTo('.hero-buttons', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }, '-=0.4')
       .fromTo('.hero-scroll', { opacity: 0 }, { opacity: 1, duration: 0.8, ease: 'power3.out' }, '-=0.2');
 
-    // Reveal elements
     gsap.utils.toArray('.reveal').forEach((el, i) => {
       gsap.to(el, {
         scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
         opacity: 1, y: 0, duration: 0.8, delay: (i % 3) * 0.08, ease: 'power3.out',
       });
     });
-
     gsap.utils.toArray('.reveal-left').forEach(el => {
       gsap.to(el, {
         scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
         opacity: 1, x: 0, duration: 0.9, ease: 'power3.out',
       });
     });
-
     gsap.utils.toArray('.reveal-right').forEach(el => {
       gsap.to(el, {
         scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' },
@@ -1477,9 +1441,9 @@ section { padding: var(--section-pad) var(--container-pad); }
       });
     });
 
-    // Highlight current day in hours table
+    // Highlight current day
     const dayIndex = new Date().getDay();
-    const dayMap = { 1: 0, 2: 1, 3: 2, 4: 3, 5: 4, 6: 5, 0: 6 };
+    const dayMap = { 1:0, 2:1, 3:2, 4:3, 5:4, 6:5, 0:6 };
     const rows = document.querySelectorAll('.hours-row');
     const currentRow = rows[dayMap[dayIndex]];
     if (currentRow) {
@@ -1490,14 +1454,12 @@ section { padding: var(--section-pad) var(--container-pad); }
       currentRow.querySelector('.hours-day').style.fontWeight = '700';
     }
   } else {
-    // If reduced motion, just show everything
     document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .hero-eyebrow, .hero h1, .hero-sub, .hero-buttons, .hero-scroll').forEach(el => {
-      el.style.opacity = '1';
-      el.style.transform = 'none';
+      el.style.opacity = '1'; el.style.transform = 'none';
     });
   }
 
-  /* ===== SMOOTH ANCHOR SCROLL ===== */
+  /* ===== SMOOTH ANCHOR ===== */
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
       const href = this.getAttribute('href');
@@ -1506,19 +1468,16 @@ section { padding: var(--section-pad) var(--container-pad); }
       const target = document.querySelector(href);
       if (target) {
         const navH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--nav-height')) || 72;
-        const top = target.getBoundingClientRect().top + window.pageYOffset - navH;
-        window.scrollTo({ top, behavior: 'smooth' });
+        window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - navH, behavior: 'smooth' });
       }
     });
   });
 
-  /* ===== RESIZE HANDLER ===== */
+  /* ===== RESIZE ===== */
   let resizeTimer;
   window.addEventListener('resize', () => {
     clearTimeout(resizeTimer);
-    resizeTimer = setTimeout(() => {
-      ScrollTrigger.refresh();
-    }, 250);
+    resizeTimer = setTimeout(() => { if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh(); }, 250);
   });
 
 })();
